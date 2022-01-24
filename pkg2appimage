@@ -3,7 +3,7 @@
 HERE="$(dirname "$(readlink -f "${0}")")"
 
 export PATH="${HERE}"/usr/bin/:"${HERE}"/usr/sbin/:"${HERE}"/usr/games/:"${HERE}"/bin/:"${HERE}"/sbin/:"${PATH}"
-export LD_LIBRARY_PATH="${HERE}"/usr/lib/:"${HERE}"/usr/lib/i386-linux-gnu/:"${HERE}"/usr/lib/x86_64-linux-gnu/:"${HERE}"/usr/lib32/:"${HERE}"/usr/lib64/:"${HERE}"/lib/:"${HERE}"/lib/i386-linux-gnu/:"${HERE}"/lib/x86_64-linux-gnu/:"${HERE}"/lib32/:"${HERE}"/lib64/:"${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="${HERE}"/usr/lib/:"${HERE}"/usr/lib/i386-linux-gnu/:"${HERE}"/usr/lib/i386-linux-gnu/:"${HERE}"/usr/lib32/:"${HERE}"/usr/lib64/:"${HERE}"/lib/:"${HERE}"/lib/i386-linux-gnu/:"${HERE}"/lib/i386-linux-gnu/:"${HERE}"/lib32/:"${HERE}"/lib64/:"${LD_LIBRARY_PATH}"
 export XDG_DATA_DIRS="${HERE}"/usr/share/:"${XDG_DATA_DIRS}"
 
 
@@ -175,15 +175,15 @@ fi
 if [ ! -z "${_ingredients_ghreleases[0]}" ] ; then
   for GHREPO in "${_ingredients_ghreleases[@]}" ; do
     wget -q "https://github.com/${GHREPO}/releases/" -O /tmp/gh-release.html
-    DEB=$(cat /tmp/gh-release.html | grep ".deb" | grep x86_64 | head -n 1 | cut -d '"' -f 2)
+    DEB=$(cat /tmp/gh-release.html | grep ".deb" | grep i386 | head -n 1 | cut -d '"' -f 2)
     if [ -z "$DEB" ] ; then
-      DEB=$(cat /tmp/gh-release.html | grep ".deb" | grep amd64 | head -n 1 | cut -d '"' -f 2)
+      DEB=$(cat /tmp/gh-release.html | grep ".deb" | grep i386 | head -n 1 | cut -d '"' -f 2)
     fi
     if [ -z "$DEB" ] ; then
-      DEB=$(cat /tmp/gh-release.html | grep ".deb" | grep x64 | head -n 1 | cut -d '"' -f 2)
+      DEB=$(cat /tmp/gh-release.html | grep ".deb" | grep x86 | head -n 1 | cut -d '"' -f 2)
     fi
     if [ -z "$DEB" ] ; then
-      DEB=$(cat /tmp/gh-release.html | grep ".deb" | grep linux64 | head -n 1 | cut -d '"' -f 2)
+      DEB=$(cat /tmp/gh-release.html | grep ".deb" | grep linux | head -n 1 | cut -d '"' -f 2)
     fi
     rm /tmp/gh-release.html
     wget -c "https://github.com/${DEB}"
@@ -329,13 +329,13 @@ HERE="$(dirname "$(readlink -f "${0}")")"
 export UNION_PRELOAD="${HERE}"
 export LD_PRELOAD="${HERE}/libunionpreload.so"
 export PATH="${HERE}"/usr/bin/:"${HERE}"/usr/sbin/:"${HERE}"/usr/games/:"${HERE}"/bin/:"${HERE}"/sbin/:"${PATH}"
-export LD_LIBRARY_PATH="${HERE}"/usr/lib/:"${HERE}"/usr/lib/i386-linux-gnu/:"${HERE}"/usr/lib/x86_64-linux-gnu/:"${HERE}"/usr/lib32/:"${HERE}"/usr/lib64/:"${HERE}"/lib/:"${HERE}"/lib/i386-linux-gnu/:"${HERE}"/lib/x86_64-linux-gnu/:"${HERE}"/lib32/:"${HERE}"/lib64/:"${LD_LIBRARY_PATH}"
+export LD_LIBRARY_PATH="${HERE}"/usr/lib/:"${HERE}"/usr/lib/i386-linux-gnu/:"${HERE}"/usr/lib/i386-linux-gnu/:"${HERE}"/usr/lib32/:"${HERE}"/usr/lib64/:"${HERE}"/lib/:"${HERE}"/lib/i386-linux-gnu/:"${HERE}"/lib/i386-linux-gnu/:"${HERE}"/lib32/:"${HERE}"/lib64/:"${LD_LIBRARY_PATH}"
 export PYTHONPATH="${HERE}"/usr/share/pyshared/:"${PYTHONPATH}"
 export PYTHONHOME="${HERE}"/usr/
 export XDG_DATA_DIRS="${HERE}"/usr/share/:"${XDG_DATA_DIRS}"
 export PERLLIB="${HERE}"/usr/share/perl5/:"${HERE}"/usr/lib/perl5/:"${PERLLIB}"
 export GSETTINGS_SCHEMA_DIR="${HERE}"/usr/share/glib-2.0/schemas/:"${GSETTINGS_SCHEMA_DIR}"
-export QT_PLUGIN_PATH="${HERE}"/usr/lib/qt4/plugins/:"${HERE}"/usr/lib/i386-linux-gnu/qt4/plugins/:"${HERE}"/usr/lib/x86_64-linux-gnu/qt4/plugins/:"${HERE}"/usr/lib32/qt4/plugins/:"${HERE}"/usr/lib64/qt4/plugins/:"${HERE}"/usr/lib/qt5/plugins/:"${HERE}"/usr/lib/i386-linux-gnu/qt5/plugins/:"${HERE}"/usr/lib/x86_64-linux-gnu/qt5/plugins/:"${HERE}"/usr/lib32/qt5/plugins/:"${HERE}"/usr/lib64/qt5/plugins/:"${QT_PLUGIN_PATH}"
+export QT_PLUGIN_PATH="${HERE}"/usr/lib/qt4/plugins/:"${HERE}"/usr/lib/i386-linux-gnu/qt4/plugins/:"${HERE}"/usr/lib/i386-linux-gnu/qt4/plugins/:"${HERE}"/usr/lib32/qt4/plugins/:"${HERE}"/usr/lib64/qt4/plugins/:"${HERE}"/usr/lib/qt5/plugins/:"${HERE}"/usr/lib/i386-linux-gnu/qt5/plugins/:"${HERE}"/usr/lib/i386-linux-gnu/qt5/plugins/:"${HERE}"/usr/lib32/qt5/plugins/:"${HERE}"/usr/lib64/qt5/plugins/:"${QT_PLUGIN_PATH}"
 EXEC=$(grep -e '^Exec=.*' "${HERE}"/*.desktop | head -n 1 | cut -d "=" -f 2- | sed -e 's|%.||g')
 exec ${EXEC} "$@"
 EOF
@@ -385,14 +385,14 @@ if [ -e usr/lib/mono ] ; then
   rm -rf usr/lib/mono/gac/
 fi
 
-if [ -d "./usr/lib/x86_64-linux-gnu/gstreamer-1.0/" ] ; then
-  mv ./usr/lib/x86_64-linux-gnu/gstreamer-1.0/* ./usr/lib/x86_64-linux-gnu/
-  rm -r ./usr/lib/x86_64-linux-gnu/gstreamer-1.0
+if [ -d "./usr/lib/i386-linux-gnu/gstreamer-1.0/" ] ; then
+  mv ./usr/lib/i386-linux-gnu/gstreamer-1.0/* ./usr/lib/i386-linux-gnu/
+  rm -r ./usr/lib/i386-linux-gnu/gstreamer-1.0
 fi
 
-if [ -d "./usr/lib/x86_64-linux-gnu/pulseaudio/" ] ; then
-  mv ./usr/lib/x86_64-linux-gnu/pulseaudio/* ./usr/lib/x86_64-linux-gnu/
-  rm -r ./usr/lib/x86_64-linux-gnu/pulseaudio
+if [ -d "./usr/lib/i386-linux-gnu/pulseaudio/" ] ; then
+  mv ./usr/lib/i386-linux-gnu/pulseaudio/* ./usr/lib/i386-linux-gnu/
+  rm -r ./usr/lib/i386-linux-gnu/pulseaudio
 fi
 
 # Execute extra steps defined in recipe
@@ -481,10 +481,5 @@ fi
 # Go out of AppImage
 cd ..
 
-if [ -z "${_updateinformation}" ] ; then
-  generate_type2_appimage
-else
-  generate_type2_appimage -u "${_updateinformation}"
-fi
-
+generate_type2_appimage
 ls -lh ../out/*.AppImage
