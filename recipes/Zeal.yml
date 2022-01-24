@@ -1,7 +1,0 @@
-app: Zeal
-
-ingredients:
-  dist: trusty
-  sources: 
-    - deb http://archive.ubuntu.com/ubuntu/ trusty main universe
-    - deb http://ppa.launchpad.net/zeal-developers/ppa/ubuntu trusty main

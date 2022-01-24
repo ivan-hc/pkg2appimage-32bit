@@ -1,9 +1,0 @@
-app: qBittorrent
-
-ingredients:
-  package: qbittorrent
-  dist:    trusty
-  sources:
-    - deb http://us.archive.ubuntu.com/ubuntu/ trusty main universe
-  ppas:
-    - qbittorrent-team/qbittorrent-stable
