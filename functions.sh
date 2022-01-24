@@ -38,7 +38,7 @@ case "$(uname -i)" in
   x86_64|amd64)
 #    echo "x86-64 system architecture"
     SYSTEM_ARCH="x86_64";;
-  i?86)
+  i386|i486|i586|i686)
 #    echo "x86 system architecture"
     SYSTEM_ARCH="i686";;
 #  arm*)
@@ -50,7 +50,7 @@ case "$(uname -i)" in
       x86_64|amd64)
 #        echo "x86-64 system architecture"
         SYSTEM_ARCH="x86_64";;
-      i?86)
+  i386|i486|i586|i686)
 #        echo "x86 system architecture"
         SYSTEM_ARCH="i686";;
     esac ;;
@@ -112,7 +112,6 @@ copy_deps()
 move_lib()
 {
   mkdir -p ./usr/lib ./lib && find ./lib/ -exec cp -v --parents -rfL {} ./usr/ \; && rm -rf ./lib
-  mkdir -p ./usr/lib ./lib64 && find ./lib64/ -exec cp -v --parents -rfL {} ./usr/ \; && rm -rf ./lib64
 }
 
 # Delete blacklisted files
@@ -184,6 +183,12 @@ generate_appimage()
   if [ -z $ARCH ] ; then
     if [[ $INFO == *"x86-64"* ]] ; then
       ARCH=x86_64
+    elif [[ $INFO == *"i386"* ]] ; then
+      ARCH=i386
+    elif [[ $INFO == *"i486"* ]] ; then
+      ARCH=i486
+    elif [[ $INFO == *"i586"* ]] ; then
+      ARCH=i586
     elif [[ $INFO == *"i686"* ]] ; then
       ARCH=i686
     elif [[ $INFO == *"armv6l"* ]] ; then
@@ -386,7 +391,7 @@ function apt-get.update(){
   
     for i in $(seq 3 $((${#repo_info[@]} - 1))); do
       echo "Caching ${base_url} ${dist_name} ${repo_info[${i}]}..."
-      local repo_url="${base_url}/dists/${dist_name}/${repo_info[${i}]}/binary-amd64/Packages.gz"
+      local repo_url="${base_url}/dists/${dist_name}/${repo_info[${i}]}/binary-i386/Packages.gz"
       wget -q "${repo_url}" -O - | gunzip -c | grep -E "^Package:|^Filename:|^Depends:|^Version:" | sed "s|^Filename: |Filename: ${base_url}/|g" >> cache.txt
     done
   done <sources.list

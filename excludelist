@@ -6,7 +6,7 @@
 # to investigate issues with missing symbols.
 
 ld-linux.so.2
-ld-linux-x86-64.so.2
+ld-linux-i386.so.2
 libanl.so.1
 libBrokenLocale.so.1
 libcidn.so.1
@@ -17,7 +17,7 @@ libm.so.6
 libmvec.so.1
 # libnsl.so.1 # Not part of glibc anymore as of Fedora 28. See https://github.com/RPCS3/rpcs3/issues/5224#issuecomment-434930594
 libnss_compat.so.2
-# libnss_db.so.2 # Not part of neon-useredition-20190321-0530-amd64.iso
+# libnss_db.so.2 # Not part of neon-useredition-20190321-0530-i686.iso
 libnss_dns.so.2
 libnss_files.so.2
 libnss_hesiod.so.2
@@ -71,7 +71,7 @@ libgbm.so.1
 libxcb.so.1
 # Workaround for:
 # Fedora 23
-# symbol lookup error: /lib64/libxcb-dri3.so.0: undefined symbol: xcb_send_fd
+# symbol lookup error: /lib/libxcb-dri3.so.0: undefined symbol: xcb_send_fd
 # Uncertain if this is required to be bundled for some distributions - if so we need to write a version check script and use LD_PRELOAD to load the system version if it is newer
 # Fedora 25:
 # undefined symbol: xcb_send_request_with_fds
@@ -85,10 +85,10 @@ libX11.so.6
 
 libgio-2.0.so.0
 # Workaround for:
-# On Ubuntu, "symbol lookup error: /usr/lib/x86_64-linux-gnu/gtk-2.0/modules/liboverlay-scrollbar.so: undefined symbol: g_settings_new"
+# On Ubuntu, "symbol lookup error: /usr/lib/i386-linux-gnu/gtk-2.0/modules/liboverlay-scrollbar.so: undefined symbol: g_settings_new"
 
-# libgdk-x11-2.0.so.0 # Missing on openSUSE-Tumbleweed-KDE-Live-x86_64-Snapshot20170601-Media.iso
-# libgtk-x11-2.0.so.0 # Missing on openSUSE-Tumbleweed-KDE-Live-x86_64-Snapshot20170601-Media.iso
+# libgdk-x11-2.0.so.0 # Missing on openSUSE-Tumbleweed-KDE-Live-i386-Snapshot20170601-Media.iso
+# libgtk-x11-2.0.so.0 # Missing on openSUSE-Tumbleweed-KDE-Live-i386-Snapshot20170601-Media.iso
 
 libasound.so.2
 # Workaround for:
@@ -105,7 +105,7 @@ libfontconfig.so.1
 
 libthai.so.0
 # Workaround for:
-# audacity: /tmp/.mount_AudaciUsFbON/usr/lib/libthai.so.0: version `LIBTHAI_0.1.25' not found (required by /usr/lib64/libpango-1.0.so.0)
+# audacity: /tmp/.mount_AudaciUsFbON/usr/lib/libthai.so.0: version `LIBTHAI_0.1.25' not found (required by /usr/lib/libpango-1.0.so.0)
 # on openSUSE Tumbleweed
 
 # other "low-level" font rendering libraries
@@ -114,14 +114,14 @@ libthai.so.0
 libfreetype.so.6
 libharfbuzz.so.0
 
-# Note, after discussion we do not exclude this, but we can use a dummy library that just does nothing
+# Note, after discussion we do not exlude this, but we can use a dummy library that just does nothing
 # libselinux.so.1
 # Workaround for:
 # sed: error while loading shared libraries: libpcre.so.3: cannot open shared object file: No such file or directory
 # Some distributions, such as Arch Linux, do not come with libselinux.so.1 by default.
 # The solution is to bundle a dummy mock library:
 # echo "extern int is_selinux_enabled(void){return 0;}" >> selinux-mock.c
-# gcc -s -shared -o libselinux.so.1 -Wl,-soname,libselinux.so.1 selinux-mock.c
+# gcc -s -shared -o libselinux.so.1 -Wl,-soname,libselinux.so.1 selinux-mock.c 
 # strip libselinux.so.1
 # More information: https://github.com/AppImage/AppImages/issues/83
 # and https://github.com/AppImage/AppImageKit/issues/775#issuecomment-614954821
@@ -143,7 +143,7 @@ libgpg-error.so.0
 # libhx509.so.5 # Missing on openSUSE LEAP 42.0
 libICE.so.6
 # libidn.so.11 # Does not come with Solus by default
-# libk5crypto.so.3 # Running AppImage built on Debian 9 or Ubuntu 16.04 on an Archlinux fails otherwise; https://github.com/AppImage/AppImages/issues/301
+# libk5crypto.so.3 # Runnning AppImage built on Debian 9 or Ubuntu 16.04 on an Archlinux fails otherwise; https://github.com/AppImage/AppImages/issues/301
 # libkeyutils.so.1 # Does not come with Void Linux by default; https://github.com/Subsurface-divelog/subsurface/issues/1971#issuecomment-466606834
 # libkrb5.so.26 # Disputed, seemingly needed by Arch Linux since Kerberos is named differently there. Missing on openSUSE LEAP 42.0
 # libkrb5.so.3 # Disputed, seemingly needed by Arch Linux since Kerberos is named differently there
@@ -169,12 +169,12 @@ libpangocairo-1.0.so.0
 libpango-1.0.so.0
 
 # FIXME:
-# Can get symbol lookup error: /lib64/libpango-1.0.so.0: undefined symbol: g_log_structured_standard
+# Can get symbol lookup error: /lib/libpango-1.0.so.0: undefined symbol: g_log_structured_standard
 # if libcairo is bundled but libpango is not
 
 # Workaround for:
 # e.g., Spotify
-# relocation error: /lib/x86_64-linux-gnu/libgcrypt.so.20:
+# relocation error: /lib/i386-linux-gnu/libgcrypt.so.20: 
 # symbol gpgrt_lock_lock, version GPG_ERROR_1.0 not defined
 # in file libgpg-error.so.0 with link time reference
 libgpg-error.so.0
@@ -204,8 +204,8 @@ libjack.so.0
 # libcrypto.so.1.0.0
 
 # According to https://github.com/RicardoEPRodrigues/3Engine/issues/4#issuecomment-511598362
-# libGLEW is not tied to a specific GPU. It's linked against libGL.so.1
-# and that one is different depending on the installed driver.
+# libGLEW is not tied to a specific GPU. It's linked against libGL.so.1 
+# and that one is different depending on the installed driver. 
 # In fact libGLEW is changing its soversion very often, so you should always bundle libGLEW.so.2.0
 
 # libglut.so.3 # to be confirmed
@@ -217,7 +217,7 @@ libxcb-dri2.so.0 # https://github.com/probonopd/linuxdeployqt/issues/331#issueco
 libfribidi.so.0 # https://github.com/olive-editor/olive/issues/221 and https://github.com/knapsu/plex-media-player-appimage/issues/14
 
 # Workaround for:
-# symbol lookup error: /lib/x86_64-linux-gnu/libgnutls.so.30: undefined symbol: __gmpz_limbs_write
+# symbol lookup error: /lib/i386-linux-gnu/libgnutls.so.30: undefined symbol: __gmpz_limbs_write
 # https://github.com/ONLYOFFICE/appimage-desktopeditors/issues/3
 # Apparently coreutils depends on it, so it should be safe to assume that it comes with every target system
 libgmp.so.10

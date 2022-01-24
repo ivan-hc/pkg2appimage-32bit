@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=pkg2appimage
+Exec=pkg2appimage
+Comment=Create AppImages from Debian/Ubuntu repositories
+Icon=appimagetool
+Categories=Development;
+Terminal=true
+
